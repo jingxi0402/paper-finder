@@ -1,0 +1,173 @@
+# Keyword scoring.
+#
+# For each topic: if ANY term appears in the TITLE -> 3 points
+#                 else if ANY term appears in the ABSTRACT -> 1 point
+#                 topic contribution = points * weight
+# Terms are matched case-insensitively on word boundaries.
+# Use "*" at the end of a term for a prefix match, e.g. "fluorinat*".
+
+topics:
+  - name: "Microbial xenobiotic biotransformation"
+    weight: 3.0
+    terms:
+      - "xenobiotic*"
+      - "biotransform*"
+      - "drug metabolism"
+      - "microbial metabolism of drugs"
+      - "gut bacteria* metaboli*"
+      - "microbiome-drug"
+      - "drug-microbiome"
+      - "pharmacomicrobiomics"
+      - "azoreductase*"
+      - "nitroreductase*"
+      - "beta-glucuronidase"
+      - "reductive dehalogenation"
+
+  - name: "Fluorinated compounds / PFAS"
+    weight: 3.0
+    terms:
+      - "fluorinat*"
+      - "PFAS"
+      - "perfluoro*"
+      - "polyfluoro*"
+      - "organofluorine"
+      - "defluorinat*"
+      - "carbon-fluorine"
+      - "C-F bond"
+      - "fluoride release"
+      - "19F NMR"
+      - "mass defect"
+
+  - name: "Bile acids / BSH"
+    weight: 2.5
+    terms:
+      - "bile acid*"
+      - "bile salt hydrolase"
+      - "BSH"
+      - "deconjugat*"
+      - "chenodeoxycholic"
+      - "glycochenodeoxycholic"
+      - "taurocholic"
+      - "microbially conjugated bile acid*"
+      - "MCBA"
+
+  - name: "Activity-based / functional proteomics"
+    weight: 2.5
+    terms:
+      - "activity-based protein profiling"
+      - "ABPP"
+      - "activity-based prob*"
+      - "chemoproteomic*"
+      - "metaproteomic*"
+      - "covalent prob*"
+      - "enzyme activity in situ"
+
+  - name: "Metabolomics methodology"
+    weight: 2.0
+    terms:
+      - "untargeted metabolomic*"
+      - "metabolomic*"
+      - "LC-MS/MS"
+      - "high-resolution mass spectrometry"
+      - "molecular networking"
+      - "annotation confidence"
+      - "SIRIUS"
+      - "stable isotope label*"
+      - "metabolite identification"
+      - "exposom*"
+
+  - name: "Realized flux vs genomic potential"
+    weight: 3.0
+    terms:
+      - "metabolic flux"
+      - "functional potential"
+      - "genomic potential"
+      - "gene abundance"
+      - "expression versus abundance"
+      - "enzyme kinetic*"
+      - "Michaelis"
+      - "Vmax"
+      - "ex vivo incubat*"
+      - "fecal slurr*"
+      - "microbial load"
+
+  - name: "Toxicology / PBK / QIVIVE"
+    weight: 2.0
+    terms:
+      - "PBK"
+      - "physiologically based"
+      - "QIVIVE"
+      - "in vitro to in vivo extrapolation"
+      - "toxicokinetic*"
+      - "risk assessment"
+      - "molecular docking"
+      - "androgen receptor"
+      - "endocrine disrupt*"
+
+  - name: "Gut disease context"
+    weight: 1.5
+    terms:
+      - "inflammatory bowel disease"
+      - "ulcerative colitis"
+      - "Crohn"
+      - "colorectal cancer"
+      - "colorectal neoplas*"
+      - "IBD"
+
+# Any of these in the title kills the record outright (clinical trial noise,
+# unrelated senses of your keywords).
+exclude:
+  - "randomized controlled trial protocol"
+  - "case report"
+  - "retraction"
+  - "correction to"
+  - "author correction"
+  - "publisher correction"
+  - "erratum"
+
+# ---------- filters ----------
+filters:
+  # A record must clear ALL of these to appear in the brief.
+  min_keyword_score: 4.5   # requires roughly one strong title hit, or two abstract hits
+  min_if: 6.0              # journals below this are dropped even if in the whitelist
+  allowed_tiers:           # 中科院分区 gate
+    - "1区Top"
+    - "1区"
+    - "2区"
+
+  # Preprints bypass min_if / tier (they have neither) but face a higher
+  # keyword bar, since there is no editorial filter upstream.
+  preprint_min_keyword_score: 7.5
+
+# Ranking bonuses added on top of keyword score (ranking only, not gating).
+tier_bonus:
+  "1区Top": 6.0
+  "1区": 4.0
+  "2区": 2.0
+  "3区": 0.5
+  "4区": 0.0
+
+# IF contributes if/10, capped, so a 50-IF journal does not swamp keywords.
+if_bonus_divisor: 10.0
+if_bonus_cap: 3.0
+
+# Safety valve: never email more than this many items.
+max_items: 25
+
+# Display colour per topic, reusing the Fluxi-gut figure palette:
+#   blue = targeted / detection · teal = mechanism / flux
+#   orange = reactions / biotransformation · purple = toxicity / disease
+topic_colors:
+  "Fluorinated compounds / PFAS": blue
+  "Metabolomics methodology": blue
+  "Realized flux vs genomic potential": teal
+  "Activity-based / functional proteomics": teal
+  "Microbial xenobiotic biotransformation": orange
+  "Bile acids / BSH": orange
+  "Toxicology / PBK / QIVIVE": purple
+  "Gut disease context": purple
+
+# Archive size limits for the website data file.
+archive:
+  retain_days: 500
+  abstract_chars: 420
