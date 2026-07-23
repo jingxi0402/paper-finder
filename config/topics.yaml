@@ -130,22 +130,10 @@ filters:
   # A record must clear ALL of these to appear in the brief.
   min_keyword_score: 4.5   # requires roughly one strong title hit, or two abstract hits
   min_if: 6.0              # journals below this are dropped even if in the whitelist
-  allowed_tiers:           # 中科院分区 gate
-    - "1区Top"
-    - "1区"
-    - "2区"
 
-  # Preprints bypass min_if / tier (they have neither) but face a higher
-  # keyword bar, since there is no editorial filter upstream.
+  # Preprints bypass min_if (they have none) but face a higher keyword bar,
+  # since there is no editorial filter upstream.
   preprint_min_keyword_score: 7.5
-
-# Ranking bonuses added on top of keyword score (ranking only, not gating).
-tier_bonus:
-  "1区Top": 6.0
-  "1区": 4.0
-  "2区": 2.0
-  "3区": 0.5
-  "4区": 0.0
 
 # IF contributes if/10, capped, so a 50-IF journal does not swamp keywords.
 if_bonus_divisor: 10.0

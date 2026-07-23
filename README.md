@@ -1,16 +1,16 @@
 # Journal Brief
 
 A self-updating website that tracks new papers from a whitelist of journals,
-filtered by keyword relevance and gated on journal IF / 中科院分区. Rebuilds
+filtered by keyword relevance and gated on journal impact factor. Rebuilds
 itself every weekday morning on GitHub Actions and publishes to GitHub Pages.
 No server, no cost, no email account involved.
 
 ```
-PubMed + bioRxiv + chemRxiv  →  dedupe  →  keyword score  →  IF / 分区 gate  →  docs/data/items.json
+PubMed + bioRxiv + chemRxiv  →  dedupe  →  keyword score  →  IF gate  →  docs/data/items.json
 ```
 
 The page reads that JSON and does everything else in the browser: search,
-topic filters, tier and score thresholds, and a 45-day signal trace showing
+topic filters, score thresholds, and a 45-day signal trace showing
 volume and topic mix at a glance. Papers you have not seen since your last
 visit are marked `NEW`.
 
@@ -94,7 +94,7 @@ The knobs that matter:
 
 - `min_keyword_score` (default 4.5) — the main volume dial. Too much noise?
   Raise to 6–8. Too little? Drop to 3.
-- `min_if` and `allowed_tiers` — the hard IF / 分区 gate.
+- `min_if` — the hard IF gate.
 - `preprint_min_keyword_score` (default 7.5) — deliberately stricter, since
   preprints have no editorial filter and bioRxiv alone posts ~150/day.
 - `max_items` — hard cap per run, so a bad config cannot flood the archive.
@@ -102,7 +102,7 @@ The knobs that matter:
   the Fluxi-gut figure palette. Drives the accent rule on each item and the
   colours in the signal trace.
 
-**`config/journals.yaml`** — the whitelist, and your IF / 分区 lookup table.
+**`config/journals.yaml`** — the whitelist, and your IF lookup table.
 
 To add a journal you need its exact PubMed abbreviation. Search the journal on
 PubMed, open any article, and copy the abbreviation from the citation line
@@ -111,10 +111,9 @@ PubMed, open any article, and copy the abbreviation from the citation line
 
 ### Annual maintenance
 
-**IF and 中科院分区 are proprietary and have no free API.** The values in
-`journals.yaml` are approximate and need verifying against the official
-releases. Update once a year: JCR lands around June, 中科院分区 around
-March–April. Ten minutes, one file.
+**IF is proprietary and has no free API.** The values in `journals.yaml`
+are approximate and need verifying against the official JCR release.
+Update once a year, around June. Ten minutes, one file.
 
 ---
 

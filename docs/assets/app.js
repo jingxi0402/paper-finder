@@ -7,13 +7,12 @@
     blue: "var(--blue)", teal: "var(--teal)",
     orange: "var(--orange)", purple: "var(--purple)", none: "var(--none)"
   };
-  var TIER_RANK = { "1区Top": 4, "1区": 3, "2区": 2, "3区": 1, "4区": 0 };
   var TRACE_DAYS = 45;
   var VISIT_KEY = "jb.lastVisit";
 
   var DB = { items: [], runs: [], topic_colors: {}, generated: "" };
   var lastVisit = null;
-  var active = { q: "", tier: "", kind: "", min: 0, topics: {} };
+  var active = { q: "", kind: "", min: 0, topics: {} };
 
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) {
@@ -45,12 +44,6 @@
 
     if (active.kind === "preprint" && !it.preprint) return false;
     if (active.kind === "journal" && it.preprint) return false;
-
-    if (active.tier) {
-      if (it.preprint) return false;
-      var want = TIER_RANK[active.tier] || 0;
-      if ((TIER_RANK[it.tier] || 0) < want) return false;
-    }
 
     if (anyTopicOn()) {
       var hit = false;
@@ -186,7 +179,6 @@
     if (it.preprint) tags += '<span class="tag pre">PREPRINT</span>';
 
     var bits = ['<span class="journal">' + esc(it.journal) + "</span>"];
-    if (it.tier) bits.push(esc(it.tier));
     if (it.if) bits.push("IF " + it.if);
     if (it.date) bits.push(esc(it.date));
 
@@ -269,9 +261,6 @@
       active.q = $("q").value.trim(); apply();
     }, 140));
 
-    $("tier").addEventListener("change", function () {
-      active.tier = this.value; apply();
-    });
     $("kind").addEventListener("change", function () {
       active.kind = this.value; apply();
     });
@@ -282,8 +271,8 @@
     });
 
     $("reset").addEventListener("click", function () {
-      active = { q: "", tier: "", kind: "", min: 0, topics: {} };
-      $("q").value = ""; $("tier").value = ""; $("kind").value = "";
+      active = { q: "", kind: "", min: 0, topics: {} };
+      $("q").value = ""; $("kind").value = "";
       $("minscore").value = 0; $("minscore-val").textContent = "0";
       Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (b) {
         b.setAttribute("aria-pressed", "false");

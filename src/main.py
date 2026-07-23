@@ -105,7 +105,8 @@ def main():
     if args.dry_run:
         for r in hits:
             meta = r.get("journal_meta") or {}
-            print(f"{r['score']:6.2f}  {meta.get('tier','preprint'):8}  "
+            kind = "preprint" if r["source"] != "pubmed" else f"IF {meta.get('if', '?')}"
+            print(f"{r['score']:6.2f}  {kind:10}  "
                   f"{r['journal'][:24]:26}  {r['title'][:70]}")
         print(f"\n{len(hits)} hits from {scanned} scanned (dry run, nothing written)")
         return

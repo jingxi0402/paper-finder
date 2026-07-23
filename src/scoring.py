@@ -1,4 +1,4 @@
-"""Score and filter records: keywords first, then IF and 中科院分区."""
+"""Score and filter records: keywords first, then IF."""
 
 from __future__ import annotations
 
@@ -73,7 +73,6 @@ def is_excluded(record, excludes):
 def score_records(records, topics, excludes, cfg):
     """Filter + score. Returns (journal_hits, preprint_hits), each sorted."""
     filters = cfg["filters"]
-    tier_bonus = cfg.get("tier_bonus", {})
     div = float(cfg.get("if_bonus_divisor", 10.0))
     cap = float(cfg.get("if_bonus_cap", 3.0))
 
@@ -98,14 +97,9 @@ def score_records(records, topics, excludes, cfg):
             if kw < float(filters["min_keyword_score"]):
                 continue
             jif = float(meta.get("if", 0.0))
-            tier = meta.get("tier", "")
             if jif < float(filters["min_if"]):
                 continue
-            if tier not in filters["allowed_tiers"]:
-                continue
-            total = (kw
-                     + float(tier_bonus.get(tier, 0.0))
-                     + min(jif / div, cap))
+            total = kw + min(jif / div, cap)
 
         enriched = dict(rec)
         enriched.update({

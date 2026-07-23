@@ -32,7 +32,6 @@ def _slim(rec: dict, abstract_chars: int, added: str) -> dict:
         "abstract": _trim(rec.get("abstract", ""), abstract_chars),
         "authors": (rec.get("authors") or [])[:6],
         "journal": rec.get("journal", ""),
-        "tier": meta.get("tier"),
         "if": meta.get("if"),
         "source": rec.get("source"),
         "preprint": rec.get("source") != "pubmed",
@@ -117,7 +116,7 @@ def write_feed(feed_path: Path, data_path: Path, site_url: str, limit: int = 60)
 
     for it in payload.get("items", [])[:limit]:
         badge = " · ".join(x for x in [
-            it.get("journal"), it.get("tier"),
+            it.get("journal"),
             f"IF {it['if']}" if it.get("if") else None,
             f"score {it.get('score')}",
         ] if x)

@@ -1,14 +1,13 @@
-# Journal whitelist = your IF / 中科院分区 lookup table.
+# Journal whitelist = your IF lookup table.
 #
-# IMPORTANT: IF and 分区 are proprietary data with no free API. The values below
-# are approximate (JCR 2024 IF, 中科院 2025 大类分区) and MUST be verified against
-# the official release before you trust them. Update once a year.
+# IMPORTANT: IF is proprietary data with no free API. The values below are
+# approximate (JCR 2024) and MUST be verified against the official release
+# before you trust them. Update once a year.
 #
 # fields:
 #   issn      : any ISSN that PubMed/Crossref indexes (print or electronic)
 #   pubmed    : exact PubMed journal title abbreviation used in [Journal] queries
 #   if        : journal impact factor
-#   tier      : 中科院分区 大类  -> one of: 1区Top / 1区 / 2区 / 3区 / 4区
 #   category  : 大类学科 (display only)
 
 journals:
@@ -17,28 +16,24 @@ journals:
     issn: "0028-0836"
     pubmed: "Nature"
     if: 50.5
-    tier: "1区Top"
     category: "综合性期刊"
 
   - name: Science
     issn: "0036-8075"
     pubmed: "Science"
     if: 44.7
-    tier: "1区Top"
     category: "综合性期刊"
 
   - name: Nature Communications
     issn: "2041-1723"
     pubmed: "Nat Commun"
     if: 14.7
-    tier: "1区"
     category: "综合性期刊"
 
   - name: Science Advances
     issn: "2375-2548"
     pubmed: "Sci Adv"
     if: 11.7
-    tier: "1区"
     category: "综合性期刊"
 
   # ---------- 微生物 / 肠道 ----------
@@ -46,63 +41,54 @@ journals:
     issn: "0092-8674"
     pubmed: "Cell"
     if: 45.5
-    tier: "1区Top"
     category: "生物学"
 
   - name: Nature Microbiology
     issn: "2058-5276"
     pubmed: "Nat Microbiol"
     if: 20.5
-    tier: "1区Top"
     category: "生物学"
 
   - name: Cell Host & Microbe
     issn: "1931-3128"
     pubmed: "Cell Host Microbe"
     if: 20.6
-    tier: "1区Top"
     category: "生物学"
 
   - name: The ISME Journal
     issn: "1751-7362"
     pubmed: "ISME J"
     if: 10.8
-    tier: "1区Top"
     category: "生物学"
 
   - name: Microbiome
     issn: "2049-2618"
     pubmed: "Microbiome"
     if: 13.8
-    tier: "1区Top"
     category: "生物学"
 
   - name: Gut Microbes
     issn: "1949-0976"
     pubmed: "Gut Microbes"
     if: 12.2
-    tier: "1区"
     category: "生物学"
 
   - name: Gut
     issn: "0017-5749"
     pubmed: "Gut"
     if: 23.0
-    tier: "1区Top"
     category: "医学"
 
   - name: Cell Metabolism
     issn: "1550-4131"
     pubmed: "Cell Metab"
     if: 27.7
-    tier: "1区Top"
     category: "生物学"
 
   - name: Nature Metabolism
     issn: "2522-5812"
     pubmed: "Nat Metab"
     if: 18.9
-    tier: "1区Top"
     category: "生物学"
 
   # ---------- 化学生物学 / 分析化学 ----------
@@ -110,28 +96,24 @@ journals:
     issn: "1552-4450"
     pubmed: "Nat Chem Biol"
     if: 12.9
-    tier: "1区Top"
     category: "化学"
 
   - name: Journal of the American Chemical Society
     issn: "0002-7863"
     pubmed: "J Am Chem Soc"
     if: 14.4
-    tier: "1区Top"
     category: "化学"
 
   - name: Analytical Chemistry
     issn: "0003-2700"
     pubmed: "Anal Chem"
     if: 6.7
-    tier: "1区"
     category: "化学"
 
   - name: Nature Chemistry
     issn: "1755-4330"
     pubmed: "Nat Chem"
     if: 19.2
-    tier: "1区Top"
     category: "化学"
 
   # ---------- 环境 / 毒理 ----------
@@ -139,24 +121,21 @@ journals:
     issn: "0013-936X"
     pubmed: "Environ Sci Technol"
     if: 10.8
-    tier: "1区Top"
     category: "环境科学与生态学"
 
   - name: Environment International
     issn: "0160-4120"
     pubmed: "Environ Int"
     if: 10.3
-    tier: "1区Top"
     category: "环境科学与生态学"
 
   - name: Journal of Hazardous Materials
     issn: "0304-3894"
     pubmed: "J Hazard Mater"
     if: 12.2
-    tier: "1区Top"
     category: "环境科学与生态学"
 
-# Preprint servers. No IF/分区; they are scored on keywords alone and are
+# Preprint servers. No IF; they are scored on keywords alone and are
 # always shown in a separate section at the bottom of the brief.
 preprints:
   biorxiv: true
