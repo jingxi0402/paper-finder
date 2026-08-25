@@ -22,6 +22,7 @@ topics:
       - "nitroreductase*"
       - "beta-glucuronidase"
       - "reductive dehalogenation"
+      - "gut microb*"
 
   - name: "Fluorinated compounds / PFAS"
     weight: 3.0
@@ -75,6 +76,9 @@ topics:
       - "stable isotope label*"
       - "metabolite identification"
       - "exposom*"
+      - "spectral matching"
+      - "LC-MS matching"
+      - "deep learning"
 
   - name: "Realized flux vs genomic potential"
     weight: 3.0
